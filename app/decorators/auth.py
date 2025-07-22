@@ -35,3 +35,23 @@ def protected(wrapped):
         return decorated_function
 
     return decorator(wrapped)
+
+from functools import wraps
+from app.hooks.error import ApiUnauthorized
+
+def check_owner(get_owner_username):
+    def decorator(f):
+        @wraps(f)
+        async def wrapper(request, *args, **kwargs):
+            current_user = kwargs.get("username")
+            if not current_user:
+                raise ApiUnauthorized("Missing authenticated user")
+
+            owner_username = await get_owner_username(request, *args, **kwargs)
+            print("check", owner_username)
+            if owner_username != current_user:
+                raise ApiUnauthorized("You are not the owner of this resource.")
+
+            return await f(request, *args, **kwargs)
+        return wrapper
+    return decorator

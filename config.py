@@ -26,7 +26,7 @@ class Config:
     }
 
     SECRET_KEY = os.getenv('SECRET_KEY', '85c145a16bd6f6e1f3e104ca78c6a102')
-    EXPIRATION_JWT = 3600  # seconds
+    EXPIRATION_JWT = 300  # seconds
 
     REDIS = 'redis://localhost:6379/0'
 
