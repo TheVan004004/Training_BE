@@ -1,0 +1,32 @@
+version: '1.0'
+
+services:
+  sanic-app:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - mongodb
+      - redis
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin123
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  mongo-data:

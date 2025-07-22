@@ -28,7 +28,7 @@ class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', '85c145a16bd6f6e1f3e104ca78c6a102')
     EXPIRATION_JWT = 300  # seconds
 
-    REDIS = 'redis://localhost:6379/0'
+    REDIS = 'redis://redis:6379/0'
 
     API_HOST = os.getenv('API_HOST', '0.0.0.0:8081')
     API_SCHEMES = os.getenv('API_SCHEMES', 'http')
@@ -53,6 +53,6 @@ class RemoteDBConfig:
 class MongoDBConfig:
     USERNAME = os.environ.get("MONGO_USERNAME") or "just_for_dev"
     PASSWORD = os.environ.get("MONGO_PASSWORD") or "password_for_dev"
-    HOST = os.environ.get("MONGO_HOST") or "localhost"
+    HOST = os.environ.get("MONGO_HOST") or "mongodb"
     PORT = os.environ.get("MONGO_PORT") or "27017"
     DATABASE = os.environ.get("MONGO_DATABASE") or "example_db"
