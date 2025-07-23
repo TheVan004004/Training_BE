@@ -22,12 +22,21 @@ jobs:
           sudo curl -L "https://github.com/docker/compose/releases/download/v2.24.5/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
 
+      - name: Create .env file
+        run: |
+          echo "SERVER_HOST=0.0.0.0" > .env
+          echo "SERVER_PORT=8080" >> .env
+          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+          echo "MONGO_USERNAME=admin" >> .env
+          echo "MONGO_PASSWORD=admin123" >> .env
+          echo "MONGO_HOST=mongodb" >> .env
+          echo "MONGO_PORT=27017" >> .env
+          echo "MONGO_DATABASE=example_db" >> .env
+
       - name: Build and run all services
         run: docker-compose up -d --build
 
       - name: Wait for Sanic to start
         run: sleep 10
 
-      - name: Check Sanic is responding
-        run: |
-          curl --fail http://localhost:8080 || (echo "Sanic failed to start" && exit 1)
+      - name: Check Sanic is resp
