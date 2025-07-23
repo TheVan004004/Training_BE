@@ -39,4 +39,6 @@ jobs:
       - name: Wait for Sanic to start
         run: sleep 10
 
-      - name: Check Sanic is resp
+      - name: Check Sanic is responding
+        run: |
+          curl --fail http://localhost:8080 || (echo "Sanic failed to start" && exit 1)
