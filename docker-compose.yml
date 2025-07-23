@@ -1,8 +1,11 @@
-version: '1.0'
+version: '3.8'
 
 services:
   sanic-app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    platform: linux/amd64
     ports:
       - "8080:8080"
     volumes:
@@ -17,11 +20,11 @@ services:
     image: mongo
     ports:
       - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=admin123
+    volumes:
+      - mongo-data:/data/db
 
   redis:
     image: redis:alpine
